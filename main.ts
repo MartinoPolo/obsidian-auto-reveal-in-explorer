@@ -1,5 +1,10 @@
 import { Plugin, TFile } from "obsidian";
-import { createDebouncedReveal, revealFileInExplorer } from "./reveal";
+import {
+  collapseAllTrackedFolders,
+  createDebouncedReveal,
+  ExpansionTracker,
+  revealFileInExplorer,
+} from "./reveal";
 import {
   DEFAULT_SETTINGS,
   RevealInNavigationSettingTab,
@@ -9,6 +14,7 @@ import {
 export default class RevealInNavigationPlugin extends Plugin {
   settings: RevealInNavigationSettings = DEFAULT_SETTINGS;
   private debouncedReveal: ReturnType<typeof createDebouncedReveal> | null = null;
+  private expansionTracker = new ExpansionTracker();
 
   async onload(): Promise<void> {
     await this.loadSettings();
@@ -19,6 +25,9 @@ export default class RevealInNavigationPlugin extends Plugin {
       this.app.workspace.on("file-open", (file: TFile | null) => {
         if (file && this.settings.autoReveal && this.debouncedReveal) {
           this.debouncedReveal.reveal(file);
+        } else if (!file && this.settings.autoReveal) {
+          // All files closed — collapse all plugin-expanded folders
+          collapseAllTrackedFolders(this.app, this.expansionTracker);
         }
       }),
     );
@@ -64,6 +73,6 @@ export default class RevealInNavigationPlugin extends Plugin {
     if (this.debouncedReveal) {
       this.debouncedReveal.cancel();
     }
-    this.debouncedReveal = createDebouncedReveal(this.app, this.settings.revealDelay);
+    this.debouncedReveal = createDebouncedReveal(this.app, this.settings.revealDelay, this.expansionTracker);
   }
 }
