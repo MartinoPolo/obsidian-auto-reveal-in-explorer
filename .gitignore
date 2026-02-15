@@ -2,13 +2,6 @@
 main.js
 *.js.map
 
-# Dependencies
-node_modules/
-
-# IDE
-.idea/
-.vscode/
-
 # OS
 .DS_Store
 Thumbs.db
@@ -16,5 +9,86 @@ Thumbs.db
 # Obsidian
 data.json
 
-# MPX project management
-.mpx/
+# Local convention — user's unversioned file pattern
+*.local.*
+
+# Environment & secrets
+.env
+.env.*
+*.pem
+*.key
+.secrets/
+credentials.json
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.eggs/
+*.egg-info/
+vendor/
+bower_components/
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+coverage/
+*.egg
+*.whl
+target/
+bin/
+obj/
+.turbo/
+.svelte-kit/
+.nuxt/
+
+# TypeScript
+*.tsbuildinfo
+*.js.map
+
+# Python
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+htmlcov/
+.coverage
+*.pyo
+
+# Package manager artifacts (not locks — project-specific)
+.yarn/
+.pnp.*
+.npm/
+.pnpm-store/
+
+# IDE & OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+*.code-workspace
+desktop.ini
+
+# Logs & debug
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+debug/
+
+# Testing
+.nyc_output/
+jest-cache/
+
+# Backup folders
+**/backup/
+
+# Claude Code local files
+.claude/CLAUDE.local.md
+.claude/settings.local.json
+.claude/*.local.*

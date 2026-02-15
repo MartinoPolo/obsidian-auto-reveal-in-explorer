@@ -1,0 +1,9 @@
+{
+  "id": "reveal-in-navigation",
+  "name": "Reveal in Navigation",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "Auto-reveals the active file in the File Explorer without transferring keyboard focus",
+  "author": "",
+  "isDesktopOnly": false
+}

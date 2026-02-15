@@ -1,6 +1,6 @@
 # Phase 1: Foundation
 
-**Status:** Not Started
+**Status:** Complete
 **Dependencies:** None
 
 ## Objective
@@ -29,26 +29,26 @@ Set up the Obsidian plugin project scaffold with build tooling and a minimal plu
 
 ### Plugin Scaffold
 
-- [ ] Create manifest.json
+- [x] Create manifest.json
   Plugin ID: reveal-in-navigation. Name: "Reveal in Navigation". Min app version: 1.0.0.
 
-- [ ] Create main.ts with empty plugin class
+- [x] Create main.ts with empty plugin class
   Extend Plugin, implement onload/onunload with console logs. Verify plugin loads in Obsidian.
 
 ### Dev Environment
 
-- [ ] Symlink project folder into Obsidian plugins directory
+- [x] Symlink project folder into Obsidian plugins directory
   Run as Administrator: `mklink /D "C:\Users\snapy\OneDrive\Obsidian\ObsidianMP\.obsidian\plugins\reveal-in-navigation" "C:\_MP_projects\obsidian-plugin-reveal-in-navigation"`. Verify Obsidian sees the plugin in Settings → Community Plugins.
 
 ### Completion Criteria
 
-- [ ] Project builds without errors (`npm run build` produces main.js)
+- [x] Project builds without errors (`npm run build` produces main.js)
 
 ---
-Progress: 2/6 tasks complete
+Progress: 6/6 tasks complete
 
 ## Decisions
-None
+- Symlink created via Git Bash `ln -s` instead of Windows `mklink /D` — avoids Administrator requirement and works in MSYS2 environment.
 
 ## Blockers
 None
