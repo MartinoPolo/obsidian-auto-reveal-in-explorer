@@ -1,6 +1,6 @@
 # Phase 2: Core Reveal
 
-**Status:** Not Started
+**Status:** Complete
 **Dependencies:** Phase 1
 
 ## Objective
@@ -21,7 +21,7 @@ Implement the core reveal mechanism — auto-scroll the File Explorer to the act
 
 ### Reveal Logic
 
-- [ ] Implement reveal.ts — core reveal function
+- [x] Implement reveal.ts — core reveal function
   1. Get explorer leaves: `app.workspace.getLeavesOfType('file-explorer')`
   2. Access file tree: `(leaf.view as any).fileItems` (Map<string, FileItem>)
   3. Look up target: `fileItems[file.path]`
@@ -31,26 +31,29 @@ Implement the core reveal mechanism — auto-scroll the File Explorer to the act
   7. Scroll if needed: `element.scrollIntoView({ block: 'center', behavior: 'smooth' })`
   8. Never call setActiveLeaf on explorer — focus stays in editor
 
-- [ ] Implement explorer visibility check
+- [x] Implement explorer visibility check
   Check `leaf.containerEl` computed style `display !== "none"`. Also handle case where File Explorer plugin is disabled (no leaves returned). Skip reveal if explorer hidden.
 
 ### Event Handling
 
-- [ ] Register file-open event listener in main.ts
+- [x] Register file-open event listener in main.ts
   Listen to `workspace.on('file-open')`. Call debounced reveal. Clean up listener on unload.
 
-- [ ] Add debounce utility for reveal calls
+- [x] Add debounce utility for reveal calls
   Configurable delay (hardcode 150ms for now). Cancel pending reveal on new file-open. Only reveal the final file in rapid sequence.
 
 ### Completion Criteria
 
-- [ ] Switching files auto-reveals in explorer without focus transfer
+- [x] Switching files auto-reveals in explorer without focus transfer
 
 ---
-Progress: 0/5 tasks complete
+Progress: 5/5 tasks complete
 
 ## Decisions
 - Direct tree manipulation via `fileItems` / `setCollapsed` / `selfEl` — confirmed viable from quick-explorer and obsidian-reveal-active-file source
+- Debounce kept in reveal.ts alongside core logic — no separate util file needed for a single helper
+- Scroll container targets `.nav-files-container` within explorer, falls back to `containerEl`
+- Used `unknown` cast instead of `any` for FileExplorerView access — stricter typing
 
 ## Blockers
 None
