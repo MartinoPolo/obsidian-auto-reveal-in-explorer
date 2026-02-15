@@ -4,11 +4,13 @@ import type RevealInNavigationPlugin from "./main";
 export interface RevealInNavigationSettings {
   autoReveal: boolean;
   revealDelay: number;
+  excludedFolders: string[];
 }
 
 export const DEFAULT_SETTINGS: RevealInNavigationSettings = {
   autoReveal: true,
   revealDelay: 150,
+  excludedFolders: [],
 };
 
 export class RevealInNavigationSettingTab extends PluginSettingTab {
@@ -48,5 +50,76 @@ export class RevealInNavigationSettingTab extends PluginSettingTab {
             await this.plugin.saveSettings();
           }),
       );
+
+    // --- Excluded Folders ---
+
+    containerEl.createEl("h3", { text: "Excluded folders" });
+    containerEl.createEl("p", {
+      text: "Folders listed here will not be auto-expanded during reveal. If an excluded folder is in a file's parent chain, the file will not be revealed.",
+      cls: "setting-item-description",
+    });
+
+    const excludedListContainer = containerEl.createDiv("excluded-folders-list");
+    this.renderExcludedFoldersList(excludedListContainer);
+
+    let inputValue = "";
+    new Setting(containerEl)
+      .setName("Add excluded folder")
+      .setDesc("Enter a folder path (e.g. \"templates\" or \"projects/archive\").")
+      .addText((text) =>
+        text
+          .setPlaceholder("folder/path")
+          .onChange((value) => {
+            inputValue = value;
+          }),
+      )
+      .addButton((button) =>
+        button
+          .setButtonText("Add")
+          .setCta()
+          .onClick(async () => {
+            const trimmed = inputValue.trim().replace(/\/+$/, "");
+            if (!trimmed) {
+              return;
+            }
+            if (this.plugin.settings.excludedFolders.includes(trimmed)) {
+              return;
+            }
+            this.plugin.settings.excludedFolders.push(trimmed);
+            await this.plugin.saveSettings();
+            this.renderExcludedFoldersList(excludedListContainer);
+            inputValue = "";
+            // Re-render the whole tab to clear the text input
+            this.display();
+          }),
+      );
+  }
+
+  private renderExcludedFoldersList(container: HTMLElement): void {
+    container.empty();
+
+    if (this.plugin.settings.excludedFolders.length === 0) {
+      container.createEl("p", {
+        text: "No excluded folders.",
+        cls: "setting-item-description",
+      });
+      return;
+    }
+
+    for (const folderPath of this.plugin.settings.excludedFolders) {
+      new Setting(container)
+        .setName(folderPath)
+        .addButton((button) =>
+          button
+            .setButtonText("Remove")
+            .setWarning()
+            .onClick(async () => {
+              this.plugin.settings.excludedFolders =
+                this.plugin.settings.excludedFolders.filter((path) => path !== folderPath);
+              await this.plugin.saveSettings();
+              this.renderExcludedFoldersList(container);
+            }),
+        );
+    }
   }
 }

@@ -78,6 +78,25 @@ Provide a command palette command to manually trigger reveal for the current fil
 - Works regardless of auto-reveal setting
 - Same no-focus-transfer behavior as auto-reveal
 
+### R7: Auto-Collapse Expanded Folders
+When revealing a file causes parent folders to expand, track those expansions. When the user navigates away from the file (switches to another file or closes it), auto-collapse the folders that were expanded — restoring the explorer tree to its prior state.
+
+**Acceptance Criteria:**
+- Only collapse folders that the plugin itself expanded (not folders the user manually opened)
+- Collapse triggers on file switch or file close
+- If the next file shares some expanded parents, only collapse the unshared ones
+- Rapid file switching does not cause jitter (respects debounce)
+
+### R8: Excluded Folders
+Settings list of folder paths that should be excluded from auto-expand during reveal. Files inside excluded folders are still highlighted in the explorer if already visible, but their parent folders are not expanded.
+
+**Acceptance Criteria:**
+- Setting: list of folder paths to exclude (e.g., `Daily`, `Archive/2024`)
+- Matching is prefix-based on the folder path
+- If a file's parent chain includes an excluded folder, skip expanding that folder and all ancestors above it
+- Excluded folders can be added/removed in settings, changes apply immediately
+- Default: empty list (no exclusions)
+
 ## Technical Approach
 
 ### Reveal Mechanism (Critical)

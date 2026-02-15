@@ -73,6 +73,6 @@ export default class RevealInNavigationPlugin extends Plugin {
     if (this.debouncedReveal) {
       this.debouncedReveal.cancel();
     }
-    this.debouncedReveal = createDebouncedReveal(this.app, this.settings.revealDelay, this.expansionTracker);
+    this.debouncedReveal = createDebouncedReveal(this.app, this.settings.revealDelay, this.expansionTracker, this.settings.excludedFolders);
   }
 }

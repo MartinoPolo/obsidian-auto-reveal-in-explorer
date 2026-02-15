@@ -12,9 +12,11 @@ Build an Obsidian plugin that auto-reveals the active file in the File Explorer 
 - [x] **Phase 1: Foundation** — 6 tasks | Dependencies: None
 - [x] **Phase 2: Core Reveal** — 5 tasks | Dependencies: Phase 1
 - [x] **Phase 3: Settings & Polish** — 5 tasks | Dependencies: Phase 2
+- [ ] **Phase 4: Auto-Collapse & Exclusions** — 6 tasks | Dependencies: Phase 2
 
 ## Dependency Graph
 Phase 1 (Foundation) → Phase 2 (Core Reveal) → Phase 3 (Settings & Polish)
+                                               → Phase 4 (Auto-Collapse & Exclusions)
 
 ## Phase Details
 
@@ -34,6 +36,10 @@ Phase 1 (Foundation) → Phase 2 (Core Reveal) → Phase 3 (Settings & Polish)
 - Use esbuild over rollup — modern Obsidian plugin standard, faster builds
 - Direct explorer tree manipulation over command execution — avoids focus transfer bug
 - Fallback to command + focus restore if direct manipulation proves fragile
+
+### Phase 4: Auto-Collapse & Exclusions
+**Goal:** Restore explorer tree state when navigating away; allow users to exclude folders from auto-expand
+**Deliverables:** Expansion tracking, auto-collapse on file switch/close, excluded folders setting, UI for managing exclusion list
 
 ## Blockers
 None

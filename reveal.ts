@@ -100,19 +100,38 @@ function getParentFolderPaths(filePath: string): string[] {
 }
 
 /**
+ * Check if a folder path matches any excluded folder (exact match or child of excluded).
+ */
+function isFolderExcluded(folderPath: string, excludedFolders: string[]): boolean {
+  for (const excluded of excludedFolders) {
+    if (folderPath === excluded || folderPath.startsWith(excluded + "/")) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
  * Expand parent folders of a file item, tracking which folders the plugin
  * actually expanded (were previously collapsed). Already-expanded folders
  * are skipped and not tracked, preserving user's manual expansions.
+ * Stops expanding when an excluded folder is encountered.
  */
 function expandParentsWithTracking(
   fileItem: FileItem,
   filePath: string,
   explorerView: FileExplorerView,
   tracker: ExpansionTracker,
+  excludedFolders: string[] = [],
 ): void {
   const folderPaths = getParentFolderPaths(filePath);
 
+  // folderPaths is deepest-first: ["a/b/c", "a/b", "a"]
+  // If an excluded folder is hit, stop expanding it and all ancestors above it.
   for (const folderPath of folderPaths) {
+    if (isFolderExcluded(folderPath, excludedFolders)) {
+      break;
+    }
     const folderItem = explorerView.fileItems[folderPath];
     if (!folderItem?.setCollapsed) {
       continue;
@@ -200,7 +219,7 @@ function estimateScrollPosition(
  *
  * Without a tracker, expands parents without tracking (manual command use).
  */
-export function revealFileInExplorer(app: App, file: TFile, tracker?: ExpansionTracker): void {
+export function revealFileInExplorer(app: App, file: TFile, tracker?: ExpansionTracker, excludedFolders: string[] = []): void {
   const leaf = getVisibleExplorerLeaf(app);
   if (!leaf) {
     return;
@@ -220,7 +239,7 @@ export function revealFileInExplorer(app: App, file: TFile, tracker?: ExpansionT
     // Compute new file's parent folder paths to determine which to keep expanded
     const newParentPaths = new Set(getParentFolderPaths(file.path));
     tracker.collapsePreviousExpansions(newParentPaths, explorerView);
-    expandParentsWithTracking(fileItem, file.path, explorerView, tracker);
+    expandParentsWithTracking(fileItem, file.path, explorerView, tracker, excludedFolders);
   } else {
     expandParents(fileItem);
   }
@@ -288,6 +307,7 @@ export function createDebouncedReveal(
   app: App,
   delayMs: number = 150,
   tracker?: ExpansionTracker,
+  excludedFolders: string[] = [],
 ): { reveal: (file: TFile) => void; cancel: () => void } {
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
@@ -297,7 +317,7 @@ export function createDebouncedReveal(
     }
     timeoutId = setTimeout(() => {
       timeoutId = null;
-      revealFileInExplorer(app, file, tracker);
+      revealFileInExplorer(app, file, tracker, excludedFolders);
     }, delayMs);
   }
 
