@@ -49,7 +49,13 @@ export class ExpansionTracker {
         folderItem.setCollapsed(true);
       }
     }
-    this.expandedFolderPaths.clear();
+    const keptPaths = new Set<string>();
+    for (const folderPath of this.expandedFolderPaths) {
+      if (folderPathsToKeep.has(folderPath)) {
+        keptPaths.add(folderPath);
+      }
+    }
+    this.expandedFolderPaths = keptPaths;
   }
 
   /**
@@ -118,7 +124,6 @@ function isFolderExcluded(folderPath: string, excludedFolders: string[]): boolea
  * Stops expanding when an excluded folder is encountered.
  */
 function expandParentsWithTracking(
-  fileItem: FileItem,
   filePath: string,
   explorerView: FileExplorerView,
   tracker: ExpansionTracker,
@@ -177,14 +182,9 @@ function scrollToElementInContainer(element: HTMLElement, scrollContainer: HTMLE
     elementRect.top >= containerRect.top &&
     elementRect.bottom <= containerRect.bottom;
 
-  console.log("[RIN] elementRect:", elementRect.top, elementRect.bottom);
-  console.log("[RIN] containerRect:", containerRect.top, containerRect.bottom);
-  console.log("[RIN] isVisible:", isVisible);
-
   if (!isVisible) {
     const offsetInContainer = elementRect.top - containerRect.top + scrollContainer.scrollTop;
     const centeredScroll = offsetInContainer - scrollContainer.clientHeight / 2;
-    console.log("[RIN] scrolling to:", centeredScroll);
     scrollContainer.scrollTop = Math.max(0, centeredScroll);
   }
 }
@@ -205,7 +205,6 @@ function estimateScrollPosition(
     : scrollContainer.scrollHeight;
 
   const estimatedPosition = (targetIndex / totalItems) * totalHeight;
-  console.log("[RIN] estimate — index:", targetIndex, "/", totalItems, "totalHeight:", totalHeight, "scrollTo:", estimatedPosition);
   scrollContainer.scrollTop = Math.max(0, estimatedPosition - scrollContainer.clientHeight / 2);
 }
 
@@ -239,7 +238,7 @@ export function revealFileInExplorer(app: App, file: TFile, tracker?: ExpansionT
     // Compute new file's parent folder paths to determine which to keep expanded
     const newParentPaths = new Set(getParentFolderPaths(file.path));
     tracker.collapsePreviousExpansions(newParentPaths, explorerView);
-    expandParentsWithTracking(fileItem, file.path, explorerView, tracker, excludedFolders);
+    expandParentsWithTracking(file.path, explorerView, tracker, excludedFolders);
   } else {
     expandParents(fileItem);
   }
@@ -258,11 +257,6 @@ export function revealFileInExplorer(app: App, file: TFile, tracker?: ExpansionT
         ?? explorerView.containerEl.querySelector(".nav-files-container") as HTMLElement
         ?? explorerView.containerEl;
 
-      console.log("[RIN] scrollContainer:", scrollContainer.className);
-      console.log("[RIN] element in DOM:", document.body.contains(element));
-      console.log("[RIN] explorerView keys:", Object.keys(explorerView));
-      console.log("[RIN] fileItem keys:", Object.keys(fileItem));
-
       if (document.body.contains(element)) {
         // Element rendered — use rect-based scroll
         scrollToElementInContainer(element, scrollContainer);
@@ -271,7 +265,6 @@ export function revealFileInExplorer(app: App, file: TFile, tracker?: ExpansionT
         estimateScrollPosition(file.path, explorerView, scrollContainer);
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
-            console.log("[RIN] after estimate - element in DOM:", document.body.contains(element));
             if (document.body.contains(element)) {
               scrollToElementInContainer(element, scrollContainer);
             }
