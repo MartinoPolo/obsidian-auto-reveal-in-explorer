@@ -1,6 +1,6 @@
 # Phase 3: Settings & Polish
 
-**Status:** Not Started
+**Status:** In Progress
 **Dependencies:** Phase 2
 
 ## Objective
@@ -21,10 +21,10 @@ Add user-configurable settings, manual reveal command, and handle edge cases for
 
 ### Settings
 
-- [ ] Create settings.ts with settings interface and tab
+- [x] Create settings.ts with settings interface and tab
   PluginSettingTab subclass. Settings: autoReveal (boolean, default true), revealDelay (number, default 150). Persist via loadData/saveData. Changes apply immediately.
 
-- [ ] Wire settings into main.ts and reveal logic
+- [x] Wire settings into main.ts and reveal logic
   Load settings on plugin load. Pass autoReveal toggle to event handler. Pass revealDelay to debounce. Update debounce when settings change.
 
 ### Commands
@@ -42,10 +42,11 @@ Add user-configurable settings, manual reveal command, and handle edge cases for
 - [ ] Settings panel works, command works, no errors on edge cases
 
 ---
-Progress: 0/5 tasks complete
+Progress: 2/5 tasks complete
 
 ## Decisions
-None
+- rebuildDebouncedReveal() recreates the debounced function on every settings save, ensuring delay changes apply immediately without plugin reload
+- Slider range 50-1000ms with step 10 — wide enough for user preference, step size avoids excessive granularity
 
 ## Blockers
 None
