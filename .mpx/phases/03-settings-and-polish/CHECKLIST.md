@@ -1,6 +1,6 @@
 # Phase 3: Settings & Polish
 
-**Status:** In Progress
+**Status:** Complete
 **Dependencies:** Phase 2
 
 ## Objective
@@ -29,24 +29,26 @@ Add user-configurable settings, manual reveal command, and handle edge cases for
 
 ### Commands
 
-- [ ] Add manual reveal command
+- [x] Add manual reveal command
   Register "Reveal in Navigation: Reveal active file" command. Works regardless of autoReveal setting. Same no-focus-transfer behavior.
 
 ### Edge Cases & Polish
 
-- [ ] Handle edge cases
+- [x] Handle edge cases
   No active file (skip). Explorer plugin disabled (skip gracefully). File not found in tree (skip). Plugin unload cleanup (remove all listeners/timers).
 
 ### Completion Criteria
 
-- [ ] Settings panel works, command works, no errors on edge cases
+- [x] Settings panel works, command works, no errors on edge cases
 
 ---
-Progress: 2/5 tasks complete
+Progress: 5/5 tasks complete
 
 ## Decisions
 - rebuildDebouncedReveal() recreates the debounced function on every settings save, ensuring delay changes apply immediately without plugin reload
 - Slider range 50-1000ms with step 10 — wide enough for user preference, step size avoids excessive granularity
+- Manual command calls revealFileInExplorer directly (no debounce) — user explicitly invoked it, instant feedback expected
+- Edge cases already handled by defensive early returns in reveal.ts; Obsidian's Plugin base class auto-cleans registerEvent/addCommand on unload
 
 ## Blockers
 None

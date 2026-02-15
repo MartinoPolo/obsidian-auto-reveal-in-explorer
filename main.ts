@@ -1,5 +1,5 @@
 import { Plugin, TFile } from "obsidian";
-import { createDebouncedReveal } from "./reveal";
+import { createDebouncedReveal, revealFileInExplorer } from "./reveal";
 import {
   DEFAULT_SETTINGS,
   RevealInNavigationSettingTab,
@@ -22,6 +22,17 @@ export default class RevealInNavigationPlugin extends Plugin {
         }
       }),
     );
+
+    this.addCommand({
+      id: "reveal-active-file",
+      name: "Reveal active file",
+      callback: () => {
+        const file = this.app.workspace.getActiveFile();
+        if (file) {
+          revealFileInExplorer(this.app, file);
+        }
+      },
+    });
 
     this.addSettingTab(new RevealInNavigationSettingTab(this.app, this));
 
