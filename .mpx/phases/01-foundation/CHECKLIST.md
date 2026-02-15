@@ -24,7 +24,7 @@ Set up the Obsidian plugin project scaffold with build tooling and a minimal plu
 - [x] Create package.json with dependencies and build scripts
   Dev dependencies: obsidian, @types/node, esbuild, typescript, builtin-modules. Scripts: build, dev.
 
-- [ ] Create tsconfig.json and esbuild.config.mjs
+- [x] Create tsconfig.json and esbuild.config.mjs
   TypeScript strict mode, ES2018 target, ESNext modules. esbuild: bundle to main.js, externalize obsidian.
 
 ### Plugin Scaffold
@@ -45,7 +45,7 @@ Set up the Obsidian plugin project scaffold with build tooling and a minimal plu
 - [ ] Project builds without errors (`npm run build` produces main.js)
 
 ---
-Progress: 1/6 tasks complete
+Progress: 2/6 tasks complete
 
 ## Decisions
 None
