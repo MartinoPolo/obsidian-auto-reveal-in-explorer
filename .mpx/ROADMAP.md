@@ -10,7 +10,7 @@ Build an Obsidian plugin that auto-reveals the active file in the File Explorer 
 ## Phases
 
 - [x] **Phase 1: Foundation** — 6 tasks | Dependencies: None
-- [ ] **Phase 2: Core Reveal** — 5 tasks | Dependencies: Phase 1
+- [x] **Phase 2: Core Reveal** — 5 tasks | Dependencies: Phase 1
 - [ ] **Phase 3: Settings & Polish** — 5 tasks | Dependencies: Phase 2
 
 ## Dependency Graph
