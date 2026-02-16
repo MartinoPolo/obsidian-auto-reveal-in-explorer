@@ -3,7 +3,7 @@
 	"name": "Auto Reveal in Explorer",
 	"version": "1.0.0",
 	"minAppVersion": "1.5.0",
-	"description": "Auto-reveals the active file in the File Explorer without transferring keyboard focus",
+	"description": "Auto-reveals the active file in the File Explorer without transferring keyboard focus.",
 	"author": "MartinoPolo",
 	"authorUrl": "https://github.com/MartinoPolo",
 	"isDesktopOnly": false
