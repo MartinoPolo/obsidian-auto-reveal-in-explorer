@@ -53,11 +53,10 @@ export class AutoRevealInExplorerSettingTab extends PluginSettingTab {
 
     // --- Excluded Folders ---
 
-    containerEl.createEl("h3", { text: "Excluded folders" });
-    containerEl.createEl("p", {
-      text: "Folders listed here will not be auto-expanded during reveal. If an excluded folder is in a file's parent chain, the file will not be revealed.",
-      cls: "setting-item-description",
-    });
+    new Setting(containerEl)
+      .setName("Excluded folders")
+      .setDesc("Folders listed here will not be auto-expanded during reveal. If an excluded folder is in a file's parent chain, the file will not be revealed.")
+      .setHeading();
 
     const excludedListContainer = containerEl.createDiv("excluded-folders-list");
     this.renderExcludedFoldersList(excludedListContainer);

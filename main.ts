@@ -44,8 +44,6 @@ export default class AutoRevealInExplorerPlugin extends Plugin {
     });
 
     this.addSettingTab(new AutoRevealInExplorerSettingTab(this.app, this));
-
-    console.log("Auto Reveal in Explorer: loaded");
   }
 
   onunload(): void {
@@ -53,7 +51,6 @@ export default class AutoRevealInExplorerPlugin extends Plugin {
       this.debouncedReveal.cancel();
       this.debouncedReveal = null;
     }
-    console.log("Auto Reveal in Explorer: unloaded");
   }
 
   async loadSettings(): Promise<void> {
