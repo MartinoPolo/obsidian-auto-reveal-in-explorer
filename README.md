@@ -1,4 +1,4 @@
-# Reveal in Navigation
+# Auto Reveal in Explorer
 
 Obsidian plugin that automatically reveals the active file in the File Explorer sidebar when switching tabs or opening files — without transferring keyboard focus away from the editor.
 
@@ -28,7 +28,7 @@ This plugin directly manipulates the File Explorer view's tree to reveal files w
 4. Symlink or copy the project folder to your Obsidian vault's plugins directory:
    ```bash
    # Example (adjust paths for your setup)
-   ln -s /path/to/obsidian-plugin-reveal-in-navigation /path/to/vault/.obsidian/plugins/reveal-in-navigation
+   ln -s /path/to/obsidian-plugin-auto-reveal-in-explorer /path/to/vault/.obsidian/plugins/auto-reveal-in-explorer
    ```
 5. Reload Obsidian and enable the plugin in Settings → Community Plugins
 

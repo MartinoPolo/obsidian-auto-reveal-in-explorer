@@ -1,4 +1,4 @@
-# Reveal in Navigation — Specification
+# Auto Reveal in Explorer — Specification
 
 Generated: 2026-02-15
 
@@ -68,13 +68,13 @@ Plugin settings panel with:
 **Acceptance Criteria:**
 - Settings persist across Obsidian restarts
 - Changes take effect immediately without restart
-- Settings accessible via Obsidian Settings → Community Plugins → Reveal in Navigation
+- Settings accessible via Obsidian Settings → Community Plugins → Auto Reveal in Explorer
 
 ### R6: Manual Reveal Command
 Provide a command palette command to manually trigger reveal for the current file.
 
 **Acceptance Criteria:**
-- Command: "Reveal in Navigation: Reveal active file"
+- Command: "Auto Reveal in Explorer: Reveal active file"
 - Works regardless of auto-reveal setting
 - Same no-focus-transfer behavior as auto-reveal
 
@@ -158,7 +158,7 @@ const explorerLeaves = app.workspace.getLeavesOfType('file-explorer');
 The plugin project folder must be symlinked into the Obsidian vault's plugins directory for live development/testing:
 
 ```cmd
-mklink /D "C:\Users\snapy\OneDrive\Obsidian\ObsidianMP\.obsidian\plugins\reveal-in-navigation" "C:\_MP_projects\obsidian-plugin-reveal-in-navigation"
+mklink /D "C:\Users\snapy\OneDrive\Obsidian\ObsidianMP\.obsidian\plugins\auto-reveal-in-explorer" "C:\_MP_projects\obsidian-plugin-auto-reveal-in-explorer"
 ```
 
 This allows building in-place and immediately testing in Obsidian via "Reload app without saving" (Ctrl+R).

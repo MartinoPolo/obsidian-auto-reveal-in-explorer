@@ -1,22 +1,22 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
-import type RevealInNavigationPlugin from "./main";
+import type AutoRevealInExplorerPlugin from "./main";
 
-export interface RevealInNavigationSettings {
+export interface AutoRevealInExplorerSettings {
   autoReveal: boolean;
   revealDelay: number;
   excludedFolders: string[];
 }
 
-export const DEFAULT_SETTINGS: RevealInNavigationSettings = {
+export const DEFAULT_SETTINGS: AutoRevealInExplorerSettings = {
   autoReveal: true,
   revealDelay: 150,
   excludedFolders: [],
 };
 
-export class RevealInNavigationSettingTab extends PluginSettingTab {
-  plugin: RevealInNavigationPlugin;
+export class AutoRevealInExplorerSettingTab extends PluginSettingTab {
+  plugin: AutoRevealInExplorerPlugin;
 
-  constructor(app: App, plugin: RevealInNavigationPlugin) {
+  constructor(app: App, plugin: AutoRevealInExplorerPlugin) {
     super(app, plugin);
     this.plugin = plugin;
   }

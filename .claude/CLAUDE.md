@@ -1,4 +1,4 @@
-# Reveal in Navigation — Obsidian Plugin
+# Auto Reveal in Explorer — Obsidian Plugin
 
 ## Project Overview
 Obsidian plugin that auto-reveals the active file in the File Explorer sidebar without transferring keyboard focus. Solves the accidental deletion bug in the reference plugin (obsidian-reveal-active-file).
@@ -21,7 +21,7 @@ Obsidian plugin that auto-reveals the active file in the File Explorer sidebar w
 
 ## Dev Setup
 - Obsidian vault: `C:\Users\snapy\OneDrive\Obsidian\ObsidianMP\`
-- Plugin symlinked to: `.obsidian\plugins\reveal-in-navigation` → this project folder
+- Plugin symlinked to: `.obsidian\plugins\auto-reveal-in-explorer` → this project folder
 - Test by building then Ctrl+R in Obsidian to reload
 
 ## Critical Design Decision

@@ -1,11 +1,12 @@
 {
-  "name": "obsidian-plugin-reveal-in-navigation",
+  "name": "obsidian-plugin-auto-reveal-in-explorer",
   "version": "1.0.0",
   "description": "Obsidian plugin that auto-reveals the active file in the File Explorer without transferring focus",
   "main": "main.js",
   "scripts": {
     "build": "node esbuild.config.mjs",
-    "dev": "node esbuild.config.mjs --watch"
+    "dev": "node esbuild.config.mjs --watch",
+    "version": "node version-bump.mjs"
   },
   "keywords": [
     "obsidian",

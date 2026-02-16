@@ -1,6 +1,6 @@
 # Implementation Roadmap
 
-Project: Reveal in Navigation
+Project: Auto Reveal in Explorer
 Generated: 2026-02-15
 Total Phases: 3
 

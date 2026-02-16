@@ -7,12 +7,12 @@ import {
 } from "./reveal";
 import {
   DEFAULT_SETTINGS,
-  RevealInNavigationSettingTab,
-  type RevealInNavigationSettings,
+  AutoRevealInExplorerSettingTab,
+  type AutoRevealInExplorerSettings,
 } from "./settings";
 
-export default class RevealInNavigationPlugin extends Plugin {
-  settings: RevealInNavigationSettings = DEFAULT_SETTINGS;
+export default class AutoRevealInExplorerPlugin extends Plugin {
+  settings: AutoRevealInExplorerSettings = DEFAULT_SETTINGS;
   private debouncedReveal: ReturnType<typeof createDebouncedReveal> | null = null;
   private expansionTracker = new ExpansionTracker();
 
@@ -43,9 +43,9 @@ export default class RevealInNavigationPlugin extends Plugin {
       },
     });
 
-    this.addSettingTab(new RevealInNavigationSettingTab(this.app, this));
+    this.addSettingTab(new AutoRevealInExplorerSettingTab(this.app, this));
 
-    console.log("Reveal in Navigation: loaded");
+    console.log("Auto Reveal in Explorer: loaded");
   }
 
   onunload(): void {
@@ -53,7 +53,7 @@ export default class RevealInNavigationPlugin extends Plugin {
       this.debouncedReveal.cancel();
       this.debouncedReveal = null;
     }
-    console.log("Reveal in Navigation: unloaded");
+    console.log("Auto Reveal in Explorer: unloaded");
   }
 
   async loadSettings(): Promise<void> {

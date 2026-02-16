@@ -30,7 +30,7 @@ Add user-configurable settings, manual reveal command, and handle edge cases for
 ### Commands
 
 - [x] Add manual reveal command
-  Register "Reveal in Navigation: Reveal active file" command. Works regardless of autoReveal setting. Same no-focus-transfer behavior.
+  Register "Auto Reveal in Explorer: Reveal active file" command. Works regardless of autoReveal setting. Same no-focus-transfer behavior.
 
 ### Edge Cases & Polish
 

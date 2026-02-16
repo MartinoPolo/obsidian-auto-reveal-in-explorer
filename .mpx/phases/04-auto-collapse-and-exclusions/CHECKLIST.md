@@ -35,7 +35,7 @@ Track which folders the plugin expands during reveal. Collapse them when navigat
 ### Excluded Folders
 
 - [x] Add excludedFolders setting
-  Add `excludedFolders: string[]` to RevealInNavigationSettings (default: []). In expandParents(), skip expanding any folder whose path matches or is a prefix of an excluded folder path. If an excluded folder is in the parent chain, skip expanding it and all ancestors above it (file won't be revealed — this is intentional).
+  Add `excludedFolders: string[]` to AutoRevealInExplorerSettings (default: []). In expandParents(), skip expanding any folder whose path matches or is a prefix of an excluded folder path. If an excluded folder is in the parent chain, skip expanding it and all ancestors above it (file won't be revealed — this is intentional).
 
 - [x] Add excluded folders UI in settings tab
   List of excluded folder paths with add/remove controls. Text input + add button. Each entry shows folder path with a remove button. Changes persist immediately.
