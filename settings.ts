@@ -27,7 +27,7 @@ export class AutoRevealInExplorerSettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName("Auto-reveal active file")
-      .setDesc("Automatically reveal the active file in the File Explorer when switching files.")
+      .setDesc("Automatically reveal the active file in the file explorer when switching files.")
       .addToggle((toggle) =>
         toggle
           .setValue(this.plugin.settings.autoReveal)
@@ -67,7 +67,7 @@ export class AutoRevealInExplorerSettingTab extends PluginSettingTab {
       .setDesc("Enter a folder path (e.g. \"templates\" or \"projects/archive\").")
       .addText((text) =>
         text
-          .setPlaceholder("folder/path")
+          .setPlaceholder("Folder/path")
           .onChange((value) => {
             inputValue = value;
           }),
