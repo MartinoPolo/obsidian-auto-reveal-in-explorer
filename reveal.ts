@@ -257,7 +257,7 @@ export function revealFileInExplorer(app: App, file: TFile, tracker?: ExpansionT
         ?? explorerView.containerEl.querySelector(".nav-files-container") as HTMLElement
         ?? explorerView.containerEl;
 
-      if (document.body.contains(element)) {
+      if (activeDocument.body.contains(element)) {
         // Element rendered — use rect-based scroll
         scrollToElementInContainer(element, scrollContainer);
       } else {
@@ -265,7 +265,7 @@ export function revealFileInExplorer(app: App, file: TFile, tracker?: ExpansionT
         estimateScrollPosition(file.path, explorerView, scrollContainer);
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
-            if (document.body.contains(element)) {
+            if (activeDocument.body.contains(element)) {
               scrollToElementInContainer(element, scrollContainer);
             }
           });
@@ -302,13 +302,13 @@ export function createDebouncedReveal(
   tracker?: ExpansionTracker,
   excludedFolders: string[] = [],
 ): { reveal: (file: TFile) => void; cancel: () => void } {
-  let timeoutId: ReturnType<typeof setTimeout> | null = null;
+  let timeoutId: number | null = null;
 
   function reveal(file: TFile): void {
     if (timeoutId !== null) {
-      clearTimeout(timeoutId);
+      activeWindow.clearTimeout(timeoutId);
     }
-    timeoutId = setTimeout(() => {
+    timeoutId = activeWindow.setTimeout(() => {
       timeoutId = null;
       revealFileInExplorer(app, file, tracker, excludedFolders);
     }, delayMs);
@@ -316,7 +316,7 @@ export function createDebouncedReveal(
 
   function cancel(): void {
     if (timeoutId !== null) {
-      clearTimeout(timeoutId);
+      activeWindow.clearTimeout(timeoutId);
       timeoutId = null;
     }
   }

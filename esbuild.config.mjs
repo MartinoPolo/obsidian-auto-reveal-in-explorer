@@ -1,12 +1,12 @@
 import esbuild from "esbuild";
-import builtins from "builtin-modules";
+import { builtinModules } from "node:module";
 
 const isWatch = process.argv.includes("--watch");
 
 const buildOptions = {
   entryPoints: ["main.ts"],
   bundle: true,
-  external: ["obsidian", "electron", ...builtins],
+  external: ["obsidian", "electron", ...builtinModules],
   format: "cjs",
   target: "es2018",
   outfile: "main.js",
