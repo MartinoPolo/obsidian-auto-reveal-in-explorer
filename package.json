@@ -1,6 +1,6 @@
 {
   "name": "obsidian-plugin-auto-reveal-in-explorer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Obsidian plugin that auto-reveals the active file in the File Explorer without transferring focus",
   "main": "main.js",
   "scripts": {
