@@ -108,7 +108,10 @@ function getParentFolderPaths(filePath: string): string[] {
 /**
  * Check if a folder path matches any excluded folder (exact match or child of excluded).
  */
-function isFolderExcluded(folderPath: string, excludedFolders: string[]): boolean {
+function isFolderExcluded(
+  folderPath: string,
+  excludedFolders: string[],
+): boolean {
   for (const excluded of excludedFolders) {
     if (folderPath === excluded || folderPath.startsWith(excluded + "/")) {
       return true;
@@ -174,7 +177,10 @@ function findScrollableAncestor(element: HTMLElement): HTMLElement | null {
   return null;
 }
 
-function scrollToElementInContainer(element: HTMLElement, scrollContainer: HTMLElement): void {
+function scrollToElementInContainer(
+  element: HTMLElement,
+  scrollContainer: HTMLElement,
+): void {
   const elementRect = element.getBoundingClientRect();
   const containerRect = scrollContainer.getBoundingClientRect();
 
@@ -183,7 +189,8 @@ function scrollToElementInContainer(element: HTMLElement, scrollContainer: HTMLE
     elementRect.bottom <= containerRect.bottom;
 
   if (!isVisible) {
-    const offsetInContainer = elementRect.top - containerRect.top + scrollContainer.scrollTop;
+    const offsetInContainer =
+      elementRect.top - containerRect.top + scrollContainer.scrollTop;
     const centeredScroll = offsetInContainer - scrollContainer.clientHeight / 2;
     scrollContainer.scrollTop = Math.max(0, centeredScroll);
   }
@@ -201,11 +208,15 @@ function estimateScrollPosition(
   // Get total content height from virtual scroll's inner div
   const contentDiv = scrollContainer.firstElementChild as HTMLElement;
   const totalHeight = contentDiv
-    ? (parseFloat(getComputedStyle(contentDiv).minHeight) || contentDiv.scrollHeight)
+    ? parseFloat(getComputedStyle(contentDiv).minHeight) ||
+      contentDiv.scrollHeight
     : scrollContainer.scrollHeight;
 
   const estimatedPosition = (targetIndex / totalItems) * totalHeight;
-  scrollContainer.scrollTop = Math.max(0, estimatedPosition - scrollContainer.clientHeight / 2);
+  scrollContainer.scrollTop = Math.max(
+    0,
+    estimatedPosition - scrollContainer.clientHeight / 2,
+  );
 }
 
 /**
@@ -218,7 +229,12 @@ function estimateScrollPosition(
  *
  * Without a tracker, expands parents without tracking (manual command use).
  */
-export function revealFileInExplorer(app: App, file: TFile, tracker?: ExpansionTracker, excludedFolders: string[] = []): void {
+export function revealFileInExplorer(
+  app: App,
+  file: TFile,
+  tracker?: ExpansionTracker,
+  excludedFolders: string[] = [],
+): void {
   const leaf = getVisibleExplorerLeaf(app);
   if (!leaf) {
     return;
@@ -238,7 +254,12 @@ export function revealFileInExplorer(app: App, file: TFile, tracker?: ExpansionT
     // Compute new file's parent folder paths to determine which to keep expanded
     const newParentPaths = new Set(getParentFolderPaths(file.path));
     tracker.collapsePreviousExpansions(newParentPaths, explorerView);
-    expandParentsWithTracking(file.path, explorerView, tracker, excludedFolders);
+    expandParentsWithTracking(
+      file.path,
+      explorerView,
+      tracker,
+      excludedFolders,
+    );
   } else {
     expandParents(fileItem);
   }
@@ -253,9 +274,11 @@ export function revealFileInExplorer(app: App, file: TFile, tracker?: ExpansionT
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       const scrollContainer =
-        findScrollableAncestor(element)
-        ?? explorerView.containerEl.querySelector(".nav-files-container") as HTMLElement
-        ?? explorerView.containerEl;
+        findScrollableAncestor(element) ??
+        (explorerView.containerEl.querySelector(
+          ".nav-files-container",
+        ) as HTMLElement) ??
+        explorerView.containerEl;
 
       if (activeDocument.body.contains(element)) {
         // Element rendered — use rect-based scroll
@@ -279,7 +302,10 @@ export function revealFileInExplorer(app: App, file: TFile, tracker?: ExpansionT
  * Collapse all folders tracked by the expansion tracker.
  * Called when no active file remains (all files closed).
  */
-export function collapseAllTrackedFolders(app: App, tracker: ExpansionTracker): void {
+export function collapseAllTrackedFolders(
+  app: App,
+  tracker: ExpansionTracker,
+): void {
   const leaf = getVisibleExplorerLeaf(app);
   if (!leaf) {
     return;

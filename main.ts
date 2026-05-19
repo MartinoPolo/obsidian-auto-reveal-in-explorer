@@ -13,7 +13,8 @@ import {
 
 export default class AutoRevealInExplorerPlugin extends Plugin {
   settings: AutoRevealInExplorerSettings = DEFAULT_SETTINGS;
-  private debouncedReveal: ReturnType<typeof createDebouncedReveal> | null = null;
+  private debouncedReveal: ReturnType<typeof createDebouncedReveal> | null =
+    null;
   private expansionTracker = new ExpansionTracker();
 
   async onload(): Promise<void> {
@@ -54,7 +55,11 @@ export default class AutoRevealInExplorerPlugin extends Plugin {
   }
 
   async loadSettings(): Promise<void> {
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData() as Partial<AutoRevealInExplorerSettings>);
+    this.settings = Object.assign(
+      {},
+      DEFAULT_SETTINGS,
+      (await this.loadData()) as Partial<AutoRevealInExplorerSettings>,
+    );
   }
 
   async saveSettings(): Promise<void> {
@@ -70,6 +75,11 @@ export default class AutoRevealInExplorerPlugin extends Plugin {
     if (this.debouncedReveal) {
       this.debouncedReveal.cancel();
     }
-    this.debouncedReveal = createDebouncedReveal(this.app, this.settings.revealDelay, this.expansionTracker, this.settings.excludedFolders);
+    this.debouncedReveal = createDebouncedReveal(
+      this.app,
+      this.settings.revealDelay,
+      this.expansionTracker,
+      this.settings.excludedFolders,
+    );
   }
 }
